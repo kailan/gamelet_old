@@ -27,7 +27,7 @@ class ModuleContext(val match: Match) {
         val ann = factory.getModuleClass().annotations.find { it.annotationClass.equals(Module.Dependencies::class) }
         if (ann != null) {
             (ann as Module.Dependencies).dependencies.forEach {
-                if (!loadModule(ModuleRegistry.getFactory(it)!!)) return false
+                loadModule(ModuleRegistry.getFactory(it)!!)
             }
         }
 
