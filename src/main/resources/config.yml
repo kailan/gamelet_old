@@ -1,0 +1,12 @@
+#
+#  G A M E L E T
+#  Main configuration file
+#
+
+# Default plugin language
+language: en
+
+maps:
+  # Where to load maps from
+  repository: maps
+  rotation: rotation.txt

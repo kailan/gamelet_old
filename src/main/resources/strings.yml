@@ -1,0 +1,38 @@
+#
+#  Gamelet internal language file
+#
+#  \n = new line
+#  &  = color codes
+#
+
+en:
+  i18n:
+    locale: "Using {locale} as default language."
+  maps:
+    none: "No maps found in repository."
+    loading: "Loading maps from {directory}..."
+    loaded: "{flavour} map loaded: {name}"
+    error: "Unable to load {name}: {error}"
+    information: |
+      &cNow playing: &f{name} v{version}
+      &7Objective: &f{description}
+      &7Authors: &f{authors}
+  match:
+    loaded: "Match loaded: {map} in {world}."
+    unloaded: "Match unloaded: {world}"
+    motd: "&cNow playing: &7{map}\n&f{objective}"
+    start: "&6The match has begun."
+    countdown:
+      tick:
+        plural: "&7Match starts in &f{time} &7seconds."
+        singular: "&7Match starts in &f1 &7second."
+      cancelled: "&cMatch start cancelled."
+  team:
+    invalid: "&cInvalid team."
+    member: "&cYou are already a member of {team}&c."
+    none: "&cNo teams available to join."
+    join: "You joined {team}&r."
+  rotation:
+    nofile: "No rotation file found, defaulting to all maps."
+    loaded: "Rotation loaded: {file}."
+    unknownmap: "Unknown map in rotation: {name}"
