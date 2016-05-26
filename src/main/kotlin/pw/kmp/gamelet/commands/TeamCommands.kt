@@ -1,12 +1,12 @@
 package pw.kmp.gamelet.commands
 
+import co.enviark.speak.Translation
 import com.google.common.base.Preconditions
 import me.hfox.aphelion.bukkit.command.BukkitCommandHandler
 import me.hfox.aphelion.command.CommandContext
 import org.bukkit.command.CommandSender
-import pw.kmp.gamelet.i18n.Translation
 import pw.kmp.gamelet.modules.team.TeamModule
-import pw.kmp.gamelet.players.Players
+import pw.kmp.gamelet.players.Playerlet
 
 class JoinTeamCommand : BukkitCommandHandler {
 
@@ -15,7 +15,7 @@ class JoinTeamCommand : BukkitCommandHandler {
     override fun getAliases() = arrayOf("join")
 
     override fun handle(sender: CommandSender, ctx: CommandContext<CommandSender>) {
-        val player = Players.get(sender)
+        val player = Playerlet.get(sender)
         Preconditions.checkNotNull(player.match, "Player is not in match")
         val teams = player.match!!.modules.getModule(TeamModule::class)!!
 
@@ -26,19 +26,19 @@ class JoinTeamCommand : BukkitCommandHandler {
                 if (team != currentTeam) {
                     team.addPlayer(player)
                 } else {
-                    player.send(Translation of "team.member" with "team" being currentTeam.getFriendlyName())
+                    player.send(Translation("team.member").put("team", currentTeam.getFriendlyName()))
                 }
             } else {
-                player.send(Translation of "team.invalid")
+                player.send(Translation("team.invalid"))
             }
         } else {
             if (currentTeam != null) {
-                player.send(Translation of "team.member" with "team" being currentTeam.getFriendlyName())
+                player.send(Translation("team.member").put("team", currentTeam.getFriendlyName()))
                 return
             }
 
             val team = teams.teams.sortedByDescending {it.players.size}.firstOrNull()
-            if (team == null) player.send(Translation of "team.none")
+            if (team == null) player.send(Translation("team.none"))
             team?.addPlayer(player)
         }
     }

@@ -1,9 +1,9 @@
 package pw.kmp.gamelet.modules.visual
 
+import co.enviark.speak.Translation
 import org.bukkit.event.EventHandler
 import pw.kmp.gamelet.event.MatchStartEvent
 import pw.kmp.gamelet.event.TeamJoinEvent
-import pw.kmp.gamelet.i18n.Translation
 import pw.kmp.gamelet.maps.Maplet
 import pw.kmp.gamelet.matches.Match
 import pw.kmp.gamelet.modules.Module
@@ -14,12 +14,12 @@ class MessageModule : Module() {
 
     @EventHandler
     fun onJoinTeam(event: TeamJoinEvent) {
-        event.player.send(Translation of "team.join" with "team" being event.team.getFriendlyName())
+        event.player.send(Translation("team.join").put("team", event.team.getFriendlyName()))
     }
 
     @EventHandler
     fun onMatchStart(event: MatchStartEvent) {
-        event.match.broadcast(Translation of "match.start")
+        event.match.broadcast(Translation("match.start"))
     }
 
 }

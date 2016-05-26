@@ -1,12 +1,12 @@
 package pw.kmp.gamelet
 
+import co.enviark.speak.Speak
+import co.enviark.speak.Translation
 import me.hfox.aphelion.bukkit.AphelionBukkit
 import org.bukkit.Bukkit
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import pw.kmp.gamelet.commands.JoinTeamCommand
 import pw.kmp.gamelet.commands.MapInfoCommand
-import pw.kmp.gamelet.i18n.Translation
 import pw.kmp.gamelet.listeners.PlayerListener
 import pw.kmp.gamelet.maps.MapManager
 import pw.kmp.gamelet.matches.MatchManager
@@ -20,9 +20,8 @@ import pw.kmp.gamelet.modules.visual.MessageModuleFactory
 import pw.kmp.gamelet.modules.world.GameruleModuleFactory
 import pw.kmp.gamelet.rotation.FileRotationProvider
 import pw.kmp.gamelet.rotation.RepositoryRotationProvider
-import pw.kmp.gamelet.util.CountdownStart
+import pw.kmp.gamelet.util.Countdown
 import java.io.File
-import java.io.InputStreamReader
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -37,7 +36,7 @@ object Gamelet {
         this.logger = plugin.logger
         plugin.saveDefaultConfig()
 
-        setupLanguage()
+        Speak.loadStrings(plugin.getResource("strings.yml"), Locale.ENGLISH)
         registerListeners()
         registerModules()
         registerCommands()
@@ -45,15 +44,7 @@ object Gamelet {
         loadRotation()
 
         MatchManager.match = MatchManager.createMatch(Rotation.next())
-        val countdown = MatchStartCountdown(MatchManager.match!!)
-        MatchManager.match!!.fire(CountdownStart(countdown))
-    }
-
-    fun setupLanguage() {
-        val langStream = InputStreamReader(plugin.getResource("strings.yml"), "UTF-8")
-        val locale = Locale.forLanguageTag(plugin.config.getString("language"))
-        Translation.initialize(YamlConfiguration.loadConfiguration(langStream), locale)
-        info(Translation of "i18n.locale" with "locale" being Translation.defaultLang.displayName)
+        Countdown.startCountdown(MatchStartCountdown(MatchManager.match!!))
     }
 
     fun registerListeners() {
@@ -82,7 +73,7 @@ object Gamelet {
     fun loadMaps() {
         MapManager.loadMaps(File(plugin.config.getString("maps.repository")))
         if (MapManager.maps.size < 1) {
-            log(Level.SEVERE, Translation of "maps.none")
+            log(Level.SEVERE, Translation("maps.none"))
             Bukkit.shutdown()
         }
     }
@@ -90,19 +81,19 @@ object Gamelet {
     fun loadRotation() {
         val rotationFile = File(plugin.config.getString("maps.rotation"))
         if (!rotationFile.isFile) {
-            info(Translation of "rotation.nofile")
+            info(Translation("rotation.nofile"))
             Rotation.initialize(RepositoryRotationProvider())
         } else {
             Rotation.initialize(FileRotationProvider(rotationFile))
-            info(Translation of "rotation.loaded" with "file" being rotationFile.name and "count" being Rotation.getMaps().size.toString())
+            info(Translation("rotation.loaded").put("file", rotationFile.name).put("count", Rotation.getMaps().size))
         }
     }
 
-    fun log(level: Level, message: Translation.TranslatedMessage) {
-        logger.log(level, message.to(Translation.defaultLang).get())
+    fun log(level: Level, message: Translation) {
+        logger.log(level, message.to(Speak.defaultLocale).get())
     }
 
-    fun info(message: Translation.TranslatedMessage) {
+    fun info(message: Translation) {
         log(Level.INFO, message)
     }
 

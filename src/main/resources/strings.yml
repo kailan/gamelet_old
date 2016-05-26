@@ -13,19 +13,17 @@ en:
     loading: "Loading maps from {directory}..."
     loaded: "{flavour} map loaded: {name}"
     error: "Unable to load {name}: {error}"
+    time: "{count} maps loaded in {time}ms"
     information: |
-      &cNow playing: &f{name} v{version}
-      &7Objective: &f{description}
-      &7Authors: &f{authors}
+      &cNow playing: &f{map.name} v{map.version}
+      &7Objective: &f{map.description}
   match:
-    loaded: "Match loaded: {map} in {world}."
+    loaded: "Match loaded: {map.name} in {world}."
     unloaded: "Match unloaded: {world}"
-    motd: "&cNow playing: &7{map}\n&f{objective}"
+    motd: "&cNow playing: &7{map.name}\n&f{objective.description}"
     start: "&6The match has begun."
     countdown:
-      tick:
-        plural: "&7Match starts in &f{time} &7seconds."
-        singular: "&7Match starts in &f1 &7second."
+      tick: "&7Match starts in &f{time} &7second{time == 1 ? '' : 's'}."
       cancelled: "&cMatch start cancelled."
   team:
     invalid: "&cInvalid team."
@@ -33,6 +31,6 @@ en:
     none: "&cNo teams available to join."
     join: "You joined {team}&r."
   rotation:
-    nofile: "No rotation file found, defaulting to all maps."
+    nofile: "No rotation file found – will play all maps in repository."
     loaded: "Rotation loaded: {file}."
-    unknownmap: "Unknown map in rotation: {name}"
+    unknownmap: "Unknown map in rotation: {name}."

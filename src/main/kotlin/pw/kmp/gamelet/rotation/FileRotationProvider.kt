@@ -1,7 +1,7 @@
 package pw.kmp.gamelet.rotation
 
+import co.enviark.speak.Translation
 import pw.kmp.gamelet.Gamelet
-import pw.kmp.gamelet.i18n.Translation
 import pw.kmp.gamelet.maps.MapManager
 import pw.kmp.gamelet.maps.Maplet
 import java.io.File
@@ -20,7 +20,7 @@ class FileRotationProvider(val file: File) : RotationProvider {
             val name = scanner.nextLine()
             var possibleMaps = MapManager.maps.filter { it.info.name.equals(name, true) }
             if (possibleMaps.size < 1) {
-                Gamelet.log(Level.WARNING, Translation of "rotation.unknownmap" with "name" being name)
+                Gamelet.log(Level.WARNING, Translation("rotation.unknownmap").put("name", name))
             } else {
                 this.maps.add(possibleMaps.first())
             }

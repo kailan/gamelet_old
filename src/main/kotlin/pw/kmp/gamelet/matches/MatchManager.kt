@@ -1,10 +1,10 @@
 package pw.kmp.gamelet.matches
 
+import co.enviark.speak.Translation
 import org.apache.commons.io.FileUtils
 import org.bukkit.Bukkit
 import org.bukkit.WorldCreator
 import pw.kmp.gamelet.Gamelet
-import pw.kmp.gamelet.i18n.Translation
 import pw.kmp.gamelet.maps.Maplet
 import pw.kmp.gamelet.util.VoidGenerator
 import java.io.File
@@ -26,7 +26,7 @@ object MatchManager {
         world.isAutoSave = false
 
         val match = Match(matchCount, map, world)
-        Gamelet.info(Translation of "match.loaded" with "map" being map.info.name and "world" being worldName)
+        Gamelet.info(Translation("match.loaded").put("map", map.info).put("world", worldName))
         return match
     }
 
@@ -37,7 +37,7 @@ object MatchManager {
         Bukkit.unloadWorld(world, false)
         FileUtils.deleteDirectory(world.worldFolder)
 
-        Gamelet.info(Translation of "match.unloaded" with "world" being world.name)
+        Gamelet.info(Translation("match.unloaded").put("world", world.name))
     }
 
 }
