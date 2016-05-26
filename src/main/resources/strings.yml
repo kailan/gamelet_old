@@ -5,32 +5,29 @@
 #  &  = color codes
 #
 
-en:
-  i18n:
-    locale: "Using {locale} as default language."
-  maps:
-    none: "No maps found in repository."
-    loading: "Loading maps from {directory}..."
-    loaded: "{flavour} map loaded: {name}"
-    error: "Unable to load {name}: {error}"
-    time: "{count} maps loaded in {time}ms"
-    information: |
-      &cNow playing: &f{map.name} v{map.version}
-      &7Objective: &f{map.description}
-  match:
-    loaded: "Match loaded: {map.name} in {world}."
-    unloaded: "Match unloaded: {world}"
-    motd: "&cNow playing: &7{map.name}\n&f{objective.description}"
-    start: "&6The match has begun."
-    countdown:
-      tick: "&7Match starts in &f{time} &7second{time == 1 ? '' : 's'}."
-      cancelled: "&cMatch start cancelled."
-  team:
-    invalid: "&cInvalid team."
-    member: "&cYou are already a member of {team}&c."
-    none: "&cNo teams available to join."
-    join: "You joined {team}&r."
-  rotation:
-    nofile: "No rotation file found – will play all maps in repository."
-    loaded: "Rotation loaded: {file}."
-    unknownmap: "Unknown map in rotation: {name}."
+i18n:
+  locale: "Using {locale} as default language."
+maps:
+  none: "No maps found in repository, shutting down..."
+  loading: "Loading maps from {directory}..."
+  loaded: "{flavour} map loaded: {name}"
+  error: "Unable to load {name}: {error}"
+  time: "{count} maps loaded in {time}ms"
+  information: "&cNow playing: &f{map.name} v{map.version}\n&7Objective: &f{map.description}"
+match:
+  loaded: "Match loaded: {map.name} in {world}."
+  unloaded: "Match unloaded: {world}"
+  motd: "&cNow playing: &7{map.name}\n&f{objective.description}"
+  start: "&6The match has begun."
+  countdown:
+    tick: "&7Match starts in &f{time} &7second{time == 1 ? '' : 's'}."
+    cancelled: "&cMatch start cancelled."
+team:
+  invalid: "&cInvalid team."
+  member: "&cYou are already a member of {team}&c."
+  none: "&cNo teams available to join."
+  join: "You joined {team}&r."
+rotation:
+  nofile: "No rotation file found – will play all maps in repository."
+  loaded: "Rotation loaded: {file}."
+  unknownmap: "Unknown map in rotation: {name}."

@@ -3,9 +3,6 @@
 #  Main configuration file
 #
 
-# Default plugin language
-language: en
-
 maps:
   # Where to load maps from
   repository: maps

@@ -40,8 +40,8 @@ object Gamelet {
         registerListeners()
         registerModules()
         registerCommands()
-        loadMaps()
-        loadRotation()
+        if (loadMaps()) loadRotation()
+        else return
 
         MatchManager.match = MatchManager.createMatch(Rotation.next())
         Countdown.startCountdown(MatchStartCountdown(MatchManager.match!!))
@@ -70,12 +70,14 @@ object Gamelet {
         ModuleRegistry.registerModule(MOTDModuleFactory())
     }
 
-    fun loadMaps() {
+    fun loadMaps() : Boolean {
         MapManager.loadMaps(File(plugin.config.getString("maps.repository")))
         if (MapManager.maps.size < 1) {
-            log(Level.SEVERE, Translation("maps.none"))
+            log(Level.WARNING, Translation("maps.none"))
             Bukkit.shutdown()
+            return false
         }
+        return true
     }
 
     fun loadRotation() {
