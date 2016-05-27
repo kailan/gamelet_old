@@ -21,7 +21,7 @@ class ModuleContext(val match: Match) {
         return modules.find { it.javaClass == module.java } as T
     }
 
-    fun <T : Module> get(module: KClass<T>): T? = getModule(module)
+    operator fun <T : Module> get(module: KClass<T>): T? = getModule(module)
 
     fun loadModule(factory: ModuleFactory<out Module>): Boolean {
         if (hasModule(factory.getModuleClass())) return true
