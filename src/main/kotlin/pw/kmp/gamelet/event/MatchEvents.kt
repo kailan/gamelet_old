@@ -18,3 +18,18 @@ class MatchStartEvent(val match: Match) : Event() {
     }
 
 }
+
+class MatchEndEvent(val match: Match) : Event() {
+
+    override fun getHandlers() = MatchEndEvent.handlers
+
+    companion object {
+
+        val handlers = HandlerList()
+
+        @JvmStatic
+        fun getHandlerList() = handlers
+
+    }
+
+}

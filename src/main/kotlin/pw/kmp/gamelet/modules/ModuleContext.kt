@@ -21,21 +21,25 @@ class ModuleContext(val match: Match) {
         return modules.find { it.javaClass == module.java } as T
     }
 
-    operator fun <T : Module> get(module: KClass<T>): T? = getModule(module)
+    operator fun <T : Module> get(module: KClass<T>): T = getModule(module)!!
 
-    fun loadModule(factory: ModuleFactory<out Module>): Boolean {
+    fun loadModule(factory: ModuleFactory<Module>): Boolean {
         if (hasModule(factory.getModuleClass())) return true
 
-        val ann = factory.getModuleClass().annotations.find { it.annotationClass.equals(Module.Dependencies::class) }
-        if (ann != null) {
-            (ann as Module.Dependencies).dependencies.forEach {
-                loadModule(ModuleRegistry.getFactory(it)!!)
-            }
+        try {
+            val module = factory.createModule(match.map, this, match)
+            if (module != null) modules.add(module)
+            return module != null
+        } catch (ex: Exception) {
+            return false
         }
+    }
 
-        val module = factory.createModule(match.map, this, match)
-        if (module != null) modules.add(module)
-        return module != null
+    fun depend(vararg modules: KClass<out Module>) {
+        modules.forEach { module ->
+            val factory = ModuleRegistry.modules.filter { it.getModuleClass() == module }.firstOrNull() ?: throw DependencyException(module)
+            if (!loadModule(factory)) throw DependencyException(module)
+        }
     }
 
     fun cleanup() {

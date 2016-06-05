@@ -16,7 +16,6 @@ open class Module : Listener {
         HandlerList.unregisterAll(this)
     }
 
-    @Target(AnnotationTarget.CLASS)
-    annotation class Dependencies(vararg val dependencies: KClass<out Module>)
-
 }
+
+class DependencyException(dependency: KClass<out Module>) : Exception("Could not load dependency: ${dependency.simpleName}")

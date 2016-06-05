@@ -17,7 +17,7 @@ maps:
 match:
   loaded: "Match loaded: {map.name} in {world}."
   unloaded: "Match unloaded: {world}"
-  motd: "&cNow playing: &7{map.name}\n&f{objective.description}"
+  motd: "&cNow playing: &7{map.name}\n&f{map.description}"
   start: "&6The match has begun."
   countdown:
     tick: "&7Match starts in &f{time} &7second{time == 1 ? '' : 's'}."

@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin
 import pw.kmp.gamelet.commands.JoinTeamCommand
 import pw.kmp.gamelet.commands.MapInfoCommand
 import pw.kmp.gamelet.listeners.PlayerListener
-import pw.kmp.gamelet.listeners.SpawnListener
 import pw.kmp.gamelet.maps.MapManager
 import pw.kmp.gamelet.matches.MatchManager
 import pw.kmp.gamelet.matches.MatchStartCountdown
@@ -50,7 +49,6 @@ object Gamelet {
 
     fun registerListeners() {
         Bukkit.getPluginManager().registerEvents(PlayerListener(), plugin)
-        Bukkit.getPluginManager().registerEvents(SpawnListener(), plugin)
     }
 
     fun registerCommands() {
